@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { provideHttpClient } from '@angular/common/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,7 +40,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
       useClass: IonicRouteStrategy 
     }, 
     provideHttpClient(),
-    InAppBrowser
+    InAppBrowser,
+    SafariViewController
   ],
   bootstrap: [AppComponent],
 })

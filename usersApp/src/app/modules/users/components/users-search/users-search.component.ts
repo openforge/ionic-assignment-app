@@ -6,6 +6,7 @@ import { clearUserSearch, searchUser } from 'src/app/store/actions/user-search.a
 import { UserSearchState } from 'src/app/store/state/user-search.state';
 import { AppState } from 'src/app/app.state';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { SafariViewController } from '@ionic-native/safari-view-controller/ngx';
 
 @Component({
   selector: 'app-users-search',
@@ -19,7 +20,8 @@ export class UsersSearchComponent implements OnInit {
   constructor(
     private store: Store<AppState>, 
     private route: ActivatedRoute,
-    private iab: InAppBrowser) {
+    private iab: InAppBrowser,
+    private safariViewController: SafariViewController) {
     this.userSearchState$ = this.store.select('userSearch');
   }
 
@@ -49,7 +51,17 @@ export class UsersSearchComponent implements OnInit {
   }
 
   openLink(url: string) {
-    const browser = this.iab.create(url, '_system'); // Open the link in the system browser
-    browser.show();
+    this.safariViewController.isAvailable().then((available: boolean) => {
+      this.safariViewController.show({ url }).subscribe((result: any) => {
+        if (result.event === 'opened') {
+          console.log('Opened');
+        } else if (result.event === 'closed') {
+          console.log('Closed');
+        }
+      });
+    }).catch(() => {
+      // Fallback if SafariViewController is not available
+      this.iab.create(url, '_system').show();
+    });
   }
 }

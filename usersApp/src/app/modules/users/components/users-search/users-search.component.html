@@ -13,6 +13,9 @@
   ></ion-searchbar>
 
   <ion-card *ngIf="(userSearchState$ | async)?.user as user" >
+    <div class="repos-label" appHighlight [publicRepos]="user.public_repos">
+      Repos {{ user.public_repos }}
+    </div>
     <ion-card-header>
       <ion-avatar>
         <img [src]="user.avatar_url" alt="{{ user.login }}">

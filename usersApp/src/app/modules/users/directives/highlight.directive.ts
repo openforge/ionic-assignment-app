@@ -10,7 +10,7 @@ export class HighlightDirective implements OnChanges {
 
   ngOnChanges(): void {
     if (this.publicRepos > 2) {
-      this.renderer.setStyle(this.el.nativeElement, 'color', 'rgba(255, 0, 0, 0.6)');
+      this.renderer.setStyle(this.el.nativeElement, 'color', 'rgba(255, 0, 0, 1)');
     } else {
       this.renderer.removeStyle(this.el.nativeElement, 'color');
     }
