@@ -13,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { provideHttpClient } from '@angular/common/http';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +33,14 @@ import { provideHttpClient } from '@angular/common/http';
       ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient()],
+  providers: [
+    { 
+      provide: RouteReuseStrategy, 
+      useClass: IonicRouteStrategy 
+    }, 
+    provideHttpClient(),
+    InAppBrowser
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { clearUserSearch, searchUser } from 'src/app/store/actions/user-search.actions';
 import { UserSearchState } from 'src/app/store/state/user-search.state';
 import { AppState } from 'src/app/app.state';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-users-search',
@@ -15,7 +16,10 @@ export class UsersSearchComponent implements OnInit {
   searchTerm: string = '';
   userSearchState$: Observable<UserSearchState>;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  constructor(
+    private store: Store<AppState>, 
+    private route: ActivatedRoute,
+    private iab: InAppBrowser) {
     this.userSearchState$ = this.store.select('userSearch');
   }
 
@@ -42,5 +46,10 @@ export class UsersSearchComponent implements OnInit {
 
   splitString(value: string, delimiter: string): string[] {
     return value.split(delimiter);
+  }
+
+  openLink(url: string) {
+    const browser = this.iab.create(url, '_system'); // Open the link in the system browser
+    browser.show();
   }
 }

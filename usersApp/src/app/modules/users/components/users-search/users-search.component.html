@@ -47,7 +47,7 @@
         <div class="field-content">
           <strong>Website/Blog:</strong>
           <div class="field-value">
-            <a [href]="user.blog" target="_blank" rel="noopener noreferrer">{{ user.blog }}</a>
+            <a (click)="openLink(user.blog)">{{ user.blog }}</a>
           </div>
         </div>
       </div>
