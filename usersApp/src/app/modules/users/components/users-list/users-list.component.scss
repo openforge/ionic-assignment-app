@@ -81,3 +81,12 @@ ion-spinner {
   margin: 20px auto;
   display: block;
 }
+
+.content-centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
