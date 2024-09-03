@@ -1,3 +1,66 @@
-<p>
-  users-search works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Search User</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-centered">
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionInput)="searchUser(searchTerm)"
+    placeholder="Search by username"
+    class="searchbar-centered"
+  ></ion-searchbar>
+
+  <ion-card *ngIf="(userSearchState$ | async)?.user as user" >
+    <ion-card-header>
+      <ion-avatar>
+        <img [src]="user.avatar_url" alt="{{ user.login }}">
+      </ion-avatar>
+      <div class="user-details">
+        <ion-card-title>{{ user.name || user.login }}</ion-card-title>
+        <ion-card-subtitle>{{ user.bio }}</ion-card-subtitle>
+      </div>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div *ngIf="user.company" class="field">
+        <ion-icon name="business-outline"></ion-icon>
+        <div class="field-content">
+          <strong>Company:</strong>
+          <div *ngFor="let company of splitString(user.company, ',')" class="field-value">
+            <a href="https://github.com/{{ company.trim() }}" target="_blank">{{ company.trim() }}</a>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="user.location" class="field">
+        <ion-icon name="location-outline"></ion-icon>
+        <div class="field-content">
+          <strong>Location:</strong>
+          <div class="field-value">{{ user.location }}</div>
+        </div>
+      </div>
+
+      <div *ngIf="user.blog" class="field">
+        <ion-icon name="globe-outline"></ion-icon>
+        <div class="field-content">
+          <strong>Website/Blog:</strong>
+          <div class="field-value">
+            <a [href]="user.blog" target="_blank" rel="noopener noreferrer">{{ user.blog }}</a>
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-spinner *ngIf="(userSearchState$ | async)?.loading"></ion-spinner>
+
+  <ion-text *ngIf="searchTerm === '' && !(userSearchState$ | async)?.loading" color="medium">
+    Please enter a username to search.
+  </ion-text>
+
+  <ion-text *ngIf="searchTerm !== '' && !(userSearchState$ | async)?.user && !(userSearchState$ | async)?.loading" color="danger">
+    No user found with that username.
+  </ion-text>
+</ion-content>

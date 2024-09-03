@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { userReducer } from './store/reducers/user.reducer';
 import { UserEffects } from './store/effects/user.effects';
+import { userSearchReducer } from './store/reducers/user-search.reducer';
+import { UserSearchEffects } from './store/effects/user-search.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
@@ -18,8 +20,16 @@ import { provideHttpClient } from '@angular/common/http';
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule,
-    StoreModule.forRoot({ users: userReducer }),
-    EffectsModule.forRoot([UserEffects]),
+    StoreModule.forRoot(
+      { 
+        users: userReducer, 
+        userSearch: userSearchReducer 
+      }),
+    EffectsModule.forRoot(
+      [
+        UserEffects, 
+        UserSearchEffects
+      ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient()],

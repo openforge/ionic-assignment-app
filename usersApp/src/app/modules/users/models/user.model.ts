@@ -20,6 +20,10 @@ export interface User {
     name: string | null;           
     email: string | null;          
     starred_at?: string;
-    public_repos: number;     
+    public_repos: number;
+    bio: string;
+    company: string,
+    location: string,
+    blog: string,
     [key: string]: any;            
 }

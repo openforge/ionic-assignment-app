@@ -1,16 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Users List</ion-title>
+    <ion-title>List</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="custom-scroll">
-  <!-- Usa el observable solo cuando ya esté disponible -->
+  <!-- Use the observable only when it is already available -->
   <ion-list *ngIf="userState$ | async as userState">
     <ion-item
       *ngFor="let user of userState.users"
-      appHighlight
-      [publicRepos]="user.public_repos"
       (click)="navigateToUser(user)"
       class="user-item"
     >
@@ -29,10 +27,10 @@
     </ion-infinite-scroll>
   </ion-list>
 
-  <!-- Muestra el spinner mientras se cargan los datos -->
+  <!-- Show spinner while data is loading -->
   <ion-spinner *ngIf="(userState$ | async)?.loading" name="crescent"></ion-spinner>
 
-  <!-- Muestra el mensaje de error si hay uno -->
+  <!-- Display the error message if there is one -->
   <ion-text *ngIf="(userState$ | async)?.error" color="danger">
     {{ (userState$ | async)?.error.message || 'An error occurred while loading users.' }}
   </ion-text>

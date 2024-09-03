@@ -24,8 +24,11 @@ export class UsersListComponent implements OnInit {
   }
 
   navigateToUser(user: User) {
-    this.navCtrl.navigateForward(`/users/tabs/search/${user.login}`);
+    this.navCtrl.navigateForward(['/users/tabs/search'], {
+      queryParams: { login: user.login }
+    });
   }
+  
 
   loadMoreUsers(event: any) {
     this.store.dispatch(loadUsers());
