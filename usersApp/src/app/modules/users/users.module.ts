@@ -7,15 +7,17 @@ import { UsersSearchComponent } from './components/users-search/users-search.com
 import { UsersTabsComponent } from './components/users-tabs/users-tabs.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { HighlightDirective } from './directives/highlight.directive';
 
 
 @NgModule({
-  declarations: [UsersTabsComponent, UsersListComponent, UsersSearchComponent],
+  declarations: [UsersTabsComponent, UsersListComponent, UsersSearchComponent, HighlightDirective],
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     UsersRoutingModule
-  ]
+  ],
+  exports: [HighlightDirective],
 })
 export class UsersModule { }

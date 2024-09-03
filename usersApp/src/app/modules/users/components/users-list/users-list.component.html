@@ -1,3 +1,39 @@
-<p>
-  users-list works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Users List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-scroll">
+  <!-- Usa el observable solo cuando ya esté disponible -->
+  <ion-list *ngIf="userState$ | async as userState">
+    <ion-item
+      *ngFor="let user of userState.users"
+      appHighlight
+      [publicRepos]="user.public_repos"
+      (click)="navigateToUser(user)"
+      class="user-item"
+    >
+      <ion-avatar slot="start" class="user-avatar">
+        <img [src]="user.avatar_url" alt="{{ user.login }}" />
+      </ion-avatar>
+      <ion-label class="user-info">
+        <h2>{{ user.name || user.login }}</h2>
+        <p class="user-email" *ngIf="user.email">{{ user.email }}</p>
+      </ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreUsers($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more users..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
+
+  <!-- Muestra el spinner mientras se cargan los datos -->
+  <ion-spinner *ngIf="(userState$ | async)?.loading" name="crescent"></ion-spinner>
+
+  <!-- Muestra el mensaje de error si hay uno -->
+  <ion-text *ngIf="(userState$ | async)?.error" color="danger">
+    {{ (userState$ | async)?.error.message || 'An error occurred while loading users.' }}
+  </ion-text>
+</ion-content>

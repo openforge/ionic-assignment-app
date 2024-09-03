@@ -18,11 +18,6 @@ const routes: Routes = [
         component: UsersSearchComponent
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: 'tabs/list',
-    pathMatch: 'full'
   }
 ];
 
